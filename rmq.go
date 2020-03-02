@@ -10,14 +10,15 @@ import (
 type consumerCallback func(amqp.Delivery)
 type postConnectCallback func(r *rmqAutoConnection)
 type reConnectCallback func(r *rmqAutoConnection)
+
 type AmqpConnectionInfo struct {
-	clientCert string
-	clientKey string
+	clientCert      string
+	clientKey       string
 	serverCertChain string
-	host string
-	userName string
-	passKey string
-	vHost string
+	host            string
+	userName        string
+	passKey         string
+	vHost           string
 }
 
 type rmqAutoConnection struct {
@@ -26,8 +27,8 @@ type rmqAutoConnection struct {
 	errChannel          chan *amqp.Error
 	postConnectCallback postConnectCallback
 	reConnectCallbacks  []reConnectCallback
-	local bool
-	connParams *AmqpConnectionInfo
+	local               bool
+	connParams          *AmqpConnectionInfo
 }
 
 func (r *rmqAutoConnection) addReConnectorCallback(callback reConnectCallback) {
@@ -78,7 +79,7 @@ func getRmqAutoConn(connName string) *rmqAutoConnection {
 }
 func setRmqAutoConn(connName string, params *AmqpConnectionInfo) {
 	if connections == nil {
-		connections  = make(map[string]*rmqAutoConnection)
+		connections = make(map[string]*rmqAutoConnection)
 	}
 	if connections[connName] == nil {
 		r := new(rmqAutoConnection)

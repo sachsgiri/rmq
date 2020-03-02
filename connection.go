@@ -3,7 +3,6 @@ package rmq
 import (
 	"log"
 	"time"
-
 	"github.com/spacemonkeygo/openssl"
 	"github.com/streadway/amqp"
 )
@@ -37,13 +36,13 @@ func (r *rmqAutoConnection) getRabbitMQWithRetry(attempts, interval int) (connec
 	return
 }
 
-func  (r *rmqAutoConnection) getRMQLocalConnection() (connection *amqp.Connection, err error) {
+func (r *rmqAutoConnection) getRMQLocalConnection() (connection *amqp.Connection, err error) {
 	url := "amqp://" + r.connParams.userName + ": " + r.connParams.passKey + "@localhost:5672" + "/" + r.connParams.vHost
 	connection, err = amqp.Dial(url)
 	return
 }
 
-func  (r *rmqAutoConnection) getAMQPSConnection() (connection *amqp.Connection, err error) {
+func (r *rmqAutoConnection) getAMQPSConnection() (connection *amqp.Connection, err error) {
 	ctx, err := openssl.NewCtx()
 	if err != nil {
 		log.Fatal(err)
@@ -73,7 +72,7 @@ func  (r *rmqAutoConnection) getAMQPSConnection() (connection *amqp.Connection, 
 
 	var amqpConnection *amqp.Connection
 
-	sslConnection, err := openssl.Dial("tcp", r.connParams.host +":5671", ctx, openssl.InsecureSkipHostVerification)
+	sslConnection, err := openssl.Dial("tcp", r.connParams.host+":5671", ctx, openssl.InsecureSkipHostVerification)
 
 	if err != nil {
 		log.Fatal(err)
@@ -103,4 +102,3 @@ func waitForExchange(conn *amqp.Connection, exchangeName string, exchangeType st
 		}
 	}
 }
-
